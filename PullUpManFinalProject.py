@@ -1,33 +1,10 @@
-answer = ["c", "o", "d", "e", "r"]
+# list with all your letters (fill in)
+answer = ["s", "t", "a", "r", "s"]
+#list with whether or not each letter has been guessed
 guessed = [False, False, False, False, False]
 
-def blanks():
-  result = ""
-  for x in range(len(answer)):
-    if guessed[x]:
-      result = result + answer[x]+ " "
-    else:
-      result = result + "_ "
-  print(result)
 
-# recursive 
-def guess(letter):
-  if letter in answer:
-    for x in range(len(answer)):
-      if answer[x] == letter:
-        guessed[x] = True
-    ascii(getCorrect())
-    blanks()
-    if getCorrect() < 5 : 
-      letter = input("You got one! Guess another letter. ")
-      guess(letter)
-    else : 
-      print("You got it! Pull-Up Man did a pull-up!")
-  else:
-    letter = input("Not that letter! Guess again. ")
-    guess(letter)
-
-
+#this is a method that returns the correct image for pull up man based on however many letters have been guessed.
 def ascii(correct):
   if correct == 1:
     print("__________")
@@ -73,25 +50,40 @@ def ascii(correct):
     print()
 
 
-def getCorrect():
-  count = 0
-  for x in range(len(answer)):
-    if guessed[x]:
-      count = count + 1
-  return count
-  
-        
-#script
-wannaPlay = input("Do you want to play a game of pull-up man with me? ")
-if wannaPlay == "yes" or wannaPlay == "Yes":
-  blanks()
-  letter = input("Guess a letter. ")
-  guess(letter)
-def play():
-  start = input("Do you want to play a game of pull up man?")
-  if start == "yes"or start == "Yes":
-    blanks() 
-    letter = input("Guess a letter. ")
+def blanks():
+  result = ""
+  for x in range(len(guessed)):
+    if guessed[x] == True:
+      result = result + answer[x] + " "
+    else: 
+      result = result + "_ "
+  print(result)
+
+
+def guess(letter):
+  if letter in answer:
+    for x in range(len(answer)):
+      if answer[x] == letter:
+        guessed[x] = True
+    ascii(getCorrect())
+    blanks()
+    if getCorrect() == 5:
+      print("YAY! You helped Pull-Up Man complete a Pull-Up! Epic! :-)")
+      playAgain = input("Would you like to play again? ")
+      if playAgain == "yes":
+        for x in range(len(guessed)):
+          guessed[x] = False
+        blanks()
+        letter = input("Guess a letter: ")
+        guess(letter)
+      else:
+        print("Maybe some other time...")
+
+
+    else:
+      print("You got one!")
+      letter = input("Guess again: ")
+      guess(letter)
+  else:
+    letter = input("Sorry! Not that one. Try again: ")
     guess(letter)
-  else: 
-    print("Okay maybe another time...")
